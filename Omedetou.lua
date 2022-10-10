@@ -1,10 +1,13 @@
-OMEDETOU_ACTIVE = false
 OMEDETOU_LOG_PREFIX = "|cff5fedf7[|r|cff1ae5f3Omedetou|r|cff5fedf7]|r"
-
 SLASH_OMEDETOU_TOGGLE1 = "/garts"
+
+local addonLoaded = CreateFrame("Frame")
+addonLoaded:RegisterEvent("ADDON_LOADED")
+addonLoaded:RegisterEvent("PLAYER_LOGOUT")
 
 local OmedetouCooldown = 0
 local OmedetouChatListener = CreateFrame("Frame")
+local OmedetouMiniMapButton
 
 local OmedetouMessageTemplates = {
   [1] = "garts",
@@ -12,7 +15,6 @@ local OmedetouMessageTemplates = {
   [3] = "gratz",
   [4] = "Congratulations on your achievement!!!!"
 }
-
 
 local function startswith(String, Start)
   return string.sub(String, 1, string.len(Start)) == Start
@@ -23,8 +25,18 @@ local function GetChatMessage()
   return OmedetouMessageTemplates[randIndex]
 end
 
+local function GetMiniMapIcon()
+  if OmedetouDB["OMEDETOU_ACTIVE"] then
+    return "Interface\\Addons\\Omedetou\\minimap-icon-enabled"
+  else
+    return "Interface\\Addons\\Omedetou\\minimap-icon-disabled"
+  end
+end
+
 local function ToggleOmedetou()
-  if OMEDETOU_ACTIVE then
+  OmedetouMiniMapButton.icon = GetMiniMapIcon()
+
+  if OmedetouDB["OMEDETOU_ACTIVE"] then
     print(OMEDETOU_LOG_PREFIX .. " is now listening for achievements.")
 
     OmedetouChatListener:RegisterEvent("CHAT_MSG_GUILD")
@@ -68,6 +80,50 @@ local function ToggleOmedetou()
 end
 
 SlashCmdList["OMEDETOU_TOGGLE"] = function(msg, editBox)
-  OMEDETOU_ACTIVE = not OMEDETOU_ACTIVE
+  OmedetouDB["OMEDETOU_ACTIVE"] = not OmedetouDB["OMEDETOU_ACTIVE"]
   ToggleOmedetou()
 end
+
+local function InitialiseOmedetou()
+  OmedetouMiniMapButton = LibStub("LibDataBroker-1.1"):NewDataObject("Omedetou", {
+    type = "data source",
+    text = "Omedetou",
+    icon = GetMiniMapIcon(),
+    OnClick = function(self, btn)
+      OmedetouDB["OMEDETOU_ACTIVE"] = not OmedetouDB["OMEDETOU_ACTIVE"]
+      ToggleOmedetou()
+    end,
+    OnTooltipShow = function(tooltip)
+      if not tooltip or not tooltip.AddLine then return end
+      tooltip:AddLine("Click to toggle Omedetou")
+    end,
+  })
+
+  local icon = LibStub("LibDBIcon-1.0", true)
+  icon:Register("Omedetou", OmedetouMiniMapButton, OmedetouDB)
+end
+
+addonLoaded:SetScript(
+  "OnEvent",
+  function(self, event, arg1)
+    if event == "ADDON_LOADED" and arg1 == "Omedetou" then
+      if OmedetouDB == nil then
+        -- Seed preferences with defaults
+        OmedetouDB = {}
+        OmedetouDB["OMEDETOU_ACTIVE"] = false
+      end
+
+      InitialiseOmedetou()
+
+      if OmedetouDB["OMEDETOU_ACTIVE"] then
+        print(OMEDETOU_LOG_PREFIX .. " is loaded and is |cff0eff7dactive|r.")
+      else
+        print(OMEDETOU_LOG_PREFIX .. " is loaded and is |cffff0e40inactive|r.")
+      end
+
+      addonLoaded:UnregisterEvent("ADDON_LOADED")
+    elseif event == "PLAYER_LOGOUT" then
+      -- --
+    end
+  end
+)
