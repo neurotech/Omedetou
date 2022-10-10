@@ -1,4 +1,5 @@
 OMEDETOU_ACTIVE = false
+OMEDETOU_LOG_PREFIX = "|cff1ae5f3Omedetou|r|cff5fedf7!|r|cffa3f5fa!|r|cffe8fcfe!|r"
 SLASH_OMEDETOU_TOGGLE1 = "/garts"
 
 local OmedetouCooldown = 0
@@ -23,6 +24,8 @@ end
 
 local function ToggleOmedetou()
   if OMEDETOU_ACTIVE then
+    print(OMEDETOU_LOG_PREFIX .. " is now listening for achievements.")
+
     OmedetouChatListener:RegisterEvent("CHAT_MSG_GUILD")
     OmedetouChatListener:RegisterEvent("CHAT_MSG_GUILD_ACHIEVEMENT")
 
@@ -57,6 +60,7 @@ local function ToggleOmedetou()
       end
     end)
   else
+    print(OMEDETOU_LOG_PREFIX .. " is no longer listening for achievements.")
     OmedetouChatListener:UnregisterEvent("CHAT_MSG_GUILD")
     OmedetouChatListener:UnregisterEvent("CHAT_MSG_GUILD_ACHIEVEMENT")
   end
