@@ -5,10 +5,12 @@
 ## X-Curse-Project-ID: -1
 ## Title: |cff1ae5f3Omedetou|r|cff5fedf7!|r|cffa3f5fa!|r|cffe8fcfe!|r
 ## Notes: Congratulations!
-## URL: https://www.curseforge.com/wow/addons/omedetou
+## URL: TBD
 ## Author: neurotech
 ## Version: @project-version@
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
+## SavedVariables: OmedetouDB
 
+LibDBIcon-1.0\embeds.xml
 Omedetou.lua

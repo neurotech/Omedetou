@@ -8,7 +8,8 @@ sed -i "s/@project-version@/$(git describe --abbrev=0)/g" Omedetou.toc.tmp
 
 mkdir -p /h/games/World\ of\ Warcraft/_classic_/Interface/AddOns/Omedetou/
 
-cp *.lua /h/games/World\ of\ Warcraft/_classic_/Interface/AddOns/Omedetou/
+cp -r LibDBIcon-1.0 /h/games/World\ of\ Warcraft/_classic_/Interface/AddOns/Omedetou/
+cp *.lua *.tga /h/games/World\ of\ Warcraft/_classic_/Interface/AddOns/Omedetou/
 
 cp Omedetou.toc.tmp /h/games/World\ of\ Warcraft/_classic_/Interface/AddOns/Omedetou/Omedetou.toc
 
