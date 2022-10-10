@@ -41,7 +41,6 @@ local function ToggleOmedetou()
       -- isSelf = false
 
       local isAchievementText = startswith(tostring(message), "has earned the achievement |cff") or
-
           startswith(message, "[Attune] |cff")
 
       if isAchievementText then
