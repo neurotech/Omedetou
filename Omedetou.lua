@@ -101,6 +101,8 @@ local function InitialiseOmedetou()
 
   local icon = LibStub("LibDBIcon-1.0", true)
   icon:Register("Omedetou", OmedetouMiniMapButton, OmedetouDB)
+
+  ToggleOmedetou()
 end
 
 addonLoaded:SetScript(
@@ -114,12 +116,6 @@ addonLoaded:SetScript(
       end
 
       InitialiseOmedetou()
-
-      if OmedetouDB["OMEDETOU_ACTIVE"] then
-        print(OMEDETOU_LOG_PREFIX .. " is loaded and is |cff0eff7dactive|r.")
-      else
-        print(OMEDETOU_LOG_PREFIX .. " is loaded and is |cffff0e40inactive|r.")
-      end
 
       addonLoaded:UnregisterEvent("ADDON_LOADED")
     elseif event == "PLAYER_LOGOUT" then
