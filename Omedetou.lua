@@ -1,5 +1,6 @@
 OMEDETOU_ACTIVE = false
-OMEDETOU_LOG_PREFIX = "|cff1ae5f3Omedetou|r|cff5fedf7!|r|cffa3f5fa!|r|cffe8fcfe!|r"
+OMEDETOU_LOG_PREFIX = "|cff5fedf7[|r|cff1ae5f3Omedetou|r|cff5fedf7]|r"
+
 SLASH_OMEDETOU_TOGGLE1 = "/garts"
 
 local OmedetouCooldown = 0
