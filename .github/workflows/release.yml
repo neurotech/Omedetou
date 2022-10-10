@@ -1,0 +1,38 @@
+name: "Tagged Release"
+
+on:
+  push:
+    tags:
+      - "**"
+
+jobs:
+  tagged-release:
+    runs-on: ubuntu-latest
+
+    env:
+      RELEASE_VERSION: ${GITHUB_REF#refs/*/}
+
+    steps:
+      - name: Checkout code and generate TOC files
+        uses: actions/checkout@v3
+
+      - run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - run: mkdir -p Omedetou
+      - run: touch Omedetou.toc.tmp
+      - run: cat Omedetou.toc > Omedetou.toc.tmp
+      - run: sed -i "s/@project-version@/${{ env.RELEASE_VERSION }}/g" Omedetou.toc.tmp
+      - run: cp *.lua ./Omedetou/
+      - run: cp Omedetou.toc.tmp ./Omedetou/Omedetou.toc
+
+      - name: Build zip
+        uses: edgarrc/action-7z@v1.0.4
+        with:
+          args: 7z a Omedetou-${{ env.RELEASE_VERSION }}.zip ./Omedetou/
+
+      - name: Publish Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            Omedetou-${{ env.RELEASE_VERSION }}.zip

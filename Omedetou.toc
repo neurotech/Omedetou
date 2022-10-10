@@ -1,0 +1,14 @@
+## Interface: 90205
+## Interface-Classic: 11403
+## Interface-BCC: 20504
+## Interface-Wrath: 30400
+## X-Curse-Project-ID: -1
+## Title: |cff#1ae5f3Omedetou|r|cff5fedf7!|r|cffa3f5fa!|r|cffe8fcfe!|r
+## Notes: Congratulations!
+## URL: https://www.curseforge.com/wow/addons/omedetou
+## Author: neurotech
+## Version: @project-version@
+## DefaultState: Enabled
+## LoadOnDemand: 0
+
+Omedetou.lua
