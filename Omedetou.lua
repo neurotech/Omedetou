@@ -46,7 +46,7 @@ local function ToggleOmedetou()
       if isAchievementText then
         if not isSelf then
           if OmedetouCooldown == 0 then
-            OmedetouCooldown = 5
+            OmedetouCooldown = 3
             local delay = math.random(1, 2)
 
             C_Timer.After(delay, function()
